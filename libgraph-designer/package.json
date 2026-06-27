@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "libgraph-designer.helloWorld",
-        "title": "Hello World"
+        "command": "libgraph3.abrirDisenador",
+        "title": "Libgraph3: Abrir Diseñador Visual"
       }
     ]
   },
