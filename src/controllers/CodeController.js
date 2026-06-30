@@ -20,20 +20,34 @@ export class CodeController {
 
     inyectarComponentes() {
         let codigo = this.project.baseCode;
-        const bloqueC = CodeGenerator.generate(this.project.components);
-        const marcador = /\/\/\s*COMPONENTES/g;
 
-        if (marcador.test(codigo)) {
-            codigo = codigo.replace(marcador, bloqueC);
+        // 1. Generamos el código nuevo envuelto en marcadores permanentes
+        const codigoGenerado = CodeGenerator.generate(this.project.components);
+        const bloqueC = `// === INICIO COMPONENTES ===\n${codigoGenerado}\n    // === FIN COMPONENTES ===`;
+
+        // 2. Expresión regular para buscar un bloque previamente generado (y borrarlo)
+        const regexBloqueExistente = /\/\/\s*===\s*INICIO COMPONENTES\s*===[^]*?\/\/\s*===\s*FIN COMPONENTES\s*===/g;
+
+        if (regexBloqueExistente.test(codigo)) {
+            // Si ya existe un código insertado antes, lo REEMPLAZAMOS todo
+            codigo = codigo.replace(regexBloqueExistente, bloqueC);
         } else {
-            const posGetch = codigo.lastIndexOf('getch()');
-            if (posGetch !== -1) {
-                codigo = codigo.substring(0, posGetch) + bloqueC + '\n    ' + codigo.substring(posGetch);
+            // Si es la primera vez, buscamos el marcador original "//COMPONENTES"
+            const marcadorOriginal = /\/\/\s*COMPONENTES/g;
+            if (marcadorOriginal.test(codigo)) {
+                codigo = codigo.replace(marcadorOriginal, bloqueC);
             } else {
-                codigo = codigo + '\n' + bloqueC;
+                // Fallback de seguridad: si no hay marcador, insertar antes de getch()
+                const posGetch = codigo.lastIndexOf('getch()');
+                if (posGetch !== -1) {
+                    codigo = codigo.substring(0, posGetch) + bloqueC + '\n    ' + codigo.substring(posGetch);
+                } else {
+                    codigo = codigo + '\n' + bloqueC;
+                }
             }
         }
 
+        // 3. Guardamos el estado y actualizamos la vista
         this.project.baseCode = codigo;
         this.textarea.value = codigo;
         ProjectManager.guardarCodigoLocal(codigo);
