@@ -231,3 +231,23 @@ body {
         height: 60%;
     }
 }
+
+/* Añadir al final de styles.css */
+.resizer-handle {
+    width: 10px;
+    height: 10px;
+    background: #ffcc00;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: se-resize;
+    border-radius: 2px 0 2px 0;
+    z-index: 20;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.componente-canvas {
+    /* Nos aseguramos de mantener el control posicional interno de las manijas */
+    position: absolute;
+    box-sizing: border-box;
+}
