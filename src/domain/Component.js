@@ -1,6 +1,5 @@
-// Entidad pura. Solo contiene datos y validaciones básicas.
 export class Component {
-    constructor({ id, type, x, y, width, height, text, command, varName }) {
+    constructor({ id, type, x, y, width, height, text, command, varName, color, fontSize }) {
         this.id = id;
         this.type = type; // 'boton', 'texto', 'rectangulo', 'campo'
         this.x = x;
@@ -8,18 +7,19 @@ export class Component {
         this.width = width;
         this.height = height;
         this.text = text || this.getDefaultText();
-        this.command = command || ''; // Para botones
-        this.varName = varName || ''; // Para campos de texto
+        this.command = command || '';
+        this.varName = varName || '';
+        this.color = color || this.getDefaultColor();
+        this.fontSize = fontSize || 1; // Factor de escala para settextstyle (1, 2, 3...)
     }
 
     getDefaultText() {
-        const map = { boton: 'Botón', texto: 'Texto', rectangulo: 'Rect', campo: 'Campo' };
+        const map = { boton: 'Botón', texto: 'Texto', rectangulo: 'Rect', campo: 'CampoTexto' };
         return map[this.type] || 'Componente';
     }
 
-    // Método de negocio: saber si un punto está dentro del componente
-    contains(px, py) {
-        return px >= this.x && px <= this.x + this.width &&
-            py >= this.y && py <= this.y + this.height;
+    getDefaultColor() {
+        const map = { boton: 'LIGHTBLUE', texto: 'BLACK', rectangulo: 'RED', campo: 'WHITE' };
+        return map[this.type] || 'BLACK';
     }
 }
