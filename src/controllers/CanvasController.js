@@ -63,4 +63,22 @@ export class CanvasController {
         this.renderer.render(this.project.components);
         return comp;
     }
+
+    iniciarArrastreDesdeId(e, id) {
+        const comp = this.project.getComponent(id);
+        if (!comp) return;
+
+        const rect = this.canvasElement.getBoundingClientRect();
+        this.moveData = {
+            id,
+            offsetX: e.clientX - rect.left - comp.x,
+            offsetY: e.clientY - rect.top - comp.y
+        };
+
+        this._onMouseMoveRef = this._onMove.bind(this);
+        this._onMouseUpRef = this._onDrop.bind(this);
+
+        document.addEventListener('mousemove', this._onMouseMoveRef);
+        document.addEventListener('mouseup', this._onMouseUpRef);
+    }
 }
