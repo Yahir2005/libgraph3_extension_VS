@@ -45,3 +45,31 @@ document.getElementById('opt-ver-codigo').addEventListener('click', () => {
     document.getElementById('canvas-wrapper').style.display = 'none';
     document.getElementById('codigo-wrapper').style.display = 'flex';
 });
+const folders = document.querySelectorAll('.tree-folder');
+folders.forEach(folder => {
+    folder.addEventListener('click', function (e) {
+        // Encontrar la lista <ul> que sigue a esta carpeta
+        const nestedList = this.nextElementSibling;
+        if (nestedList && nestedList.classList.contains('nested')) {
+            nestedList.classList.toggle('active');
+
+            // Cambiar la flecha (▶ a ▼)
+            const arrow = this.querySelector('.arrow');
+            if (arrow) {
+                arrow.textContent = nestedList.classList.contains('active') ? '▼' : '▶';
+            }
+        }
+    });
+});
+
+// 2. Manejar la selección visual de archivos (quitar 'activo' del viejo, poner al nuevo)
+const files = document.querySelectorAll('.tree-file');
+files.forEach(file => {
+    file.addEventListener('click', function (e) {
+        // Evitar que el clic en main.c oculte el menú si se hace con otro botón
+        // Removemos clase activo de todos
+        files.forEach(f => f.classList.remove('activo'));
+        // Agregamos al que recibió el clic
+        this.classList.add('activo');
+    });
+});

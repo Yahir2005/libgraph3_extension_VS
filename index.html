@@ -4,21 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>libgraph3 IDE - Editor</title>
+    <title>libgraph3 IDE Ligero - Editor</title>
     <link rel="stylesheet" href="./styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 
 <body>
     <div id="app-container">
+
         <div id="panel-izquierdo">
-            <div class="panel-header">📁 Explorador</div>
-            <div class="lista-archivos">
-                <div class="archivo-item activo" id="file-inicio">📄 main.c</div>
+            <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>📁 Explorador</span>
+                <button id="btn-abrir-carpeta"
+                    style="background:#007acc; border:none; color:white; padding:4px 8px; border-radius:4px; cursor:pointer; font-size:0.75rem;">Abrir
+                    Carpeta</button>
+            </div>
+            <div class="explorador-tree" id="tree-container">
+                <div style="padding: 15px; color: #888; text-align: center; font-size: 0.85rem; line-height: 1.5;">
+                    Usa el botón "Abrir Carpeta" para cargar tu proyecto local.
+                </div>
             </div>
         </div>
 
         <div id="panel-derecho">
+
             <div id="toolbar-ui" class="toolbar">
                 <div class="grupo-herramientas">
                     <span style="color:#888; font-size:0.9rem; margin-right:10px;">🧰 Modo UI:</span>
@@ -38,12 +46,13 @@
 
             <div id="toolbar-codigo" class="toolbar" style="display:none;">
                 <div class="grupo-herramientas">
-                    <span style="color:#888; font-size:0.9rem; margin-right:10px;">💻 Modo Código</span>
+                    <span style="color:#888; font-size:0.9rem; margin-right:10px;">💻 Modo Código:</span>
+                    <span style="color:#a1a1a1; font-size:0.85rem;">Edita el archivo C directamente.</span>
                 </div>
                 <div class="grupo-acciones">
-                    <button class="boton-accion principal" id="descargar">💾 Descargar .c</button>
+                    <button class="boton-accion principal" id="guardarReal">💾 Guardar (Ctrl+S)</button>
                     <button class="boton-accion" onclick="window.location.href='inicio.html'" style="background:#555;">⬅
-                        Inicio</button>
+                        Volver al inicio</button>
                 </div>
             </div>
 
@@ -55,6 +64,7 @@
                     <textarea id="codigoTextarea" spellcheck="false"></textarea>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -90,7 +100,7 @@
                 style="width:100%; background:#1e1e1e; border:1px solid #3c3c3c; color:white; padding:5px; border-radius:4px; margin-bottom:10px;">
         </div>
         <div id="prop-variable-container" style="display:none;"><label
-                style="font-size:0.75rem; display:block; margin-bottom:4px;">Nombre Variable C:</label><input
+                style="font-size:0.75rem; display:block; margin-bottom:4px;">Nombre de Variable C:</label><input
                 type="text" id="prop-variable" placeholder="txt_buffer"
                 style="width:100%; background:#1e1e1e; border:1px solid #3c3c3c; color:white; padding:5px; border-radius:4px; margin-bottom:10px;">
         </div>
