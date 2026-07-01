@@ -1,9 +1,8 @@
 import { CodeGenerator } from '../application/CodeGenerator.js';
 import { ProjectManager } from '../application/ProjectManager.js';
-import { FileExporter } from '../application/FileExporter.js';
 
 export class CodeController {
-    constructor(project, textareaElement, insertBtn, downloadBtn) {
+    constructor(project, textareaElement, insertBtn) {
         this.project = project;
         this.textarea = textareaElement;
 
@@ -13,7 +12,6 @@ export class CodeController {
         });
 
         if (insertBtn) insertBtn.addEventListener('click', () => this.inyectarComponentes());
-        if (downloadBtn) downloadBtn.addEventListener('click', () => this.descargarCodigoC());
     }
 
     inyectarComponentes() {
@@ -38,6 +36,4 @@ export class CodeController {
         this.textarea.value = codigo;
         ProjectManager.guardarCodigoLocal(codigo);
     }
-
-    descargarCodigoC() { FileExporter.descargarArchivoTexto(this.project.baseCode, 'main.c'); }
 }
