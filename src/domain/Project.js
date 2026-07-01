@@ -13,10 +13,6 @@ export class Project {
         return comp;
     }
 
-    removeComponent(id) {
-        this.components = this.components.filter(c => c.id !== id);
-    }
-
     updateComponent(id, data) {
         const comp = this.components.find(c => c.id === id);
         if (comp) Object.assign(comp, data);
